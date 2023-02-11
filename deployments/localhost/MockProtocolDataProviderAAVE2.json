@@ -1,0 +1,217 @@
+{
+  "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_balance",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        }
+      ],
+      "name": "getReserveData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "availableLiquidity",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalStableDebt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "totalVariableDebt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "liquidityRate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "variableBorrowRate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableBorrowRate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "averageStableBorrowRate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "liquidityIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "variableBorrowIndex",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint40",
+          "name": "lastUpdateTimestamp",
+          "type": "uint40"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserReserveData",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "currentATokenBalance",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentStableDebt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentVariableDebt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "principalStableDebt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "scaledVariableDebt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "stableBorrowRate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "liquidityRate",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint40",
+          "name": "stableRateLastUpdated",
+          "type": "uint40"
+        },
+        {
+          "internalType": "bool",
+          "name": "usageAsCollateralEnabled",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_balance",
+          "type": "uint256"
+        }
+      ],
+      "name": "setMockedBalance",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xe826f3ba981b5c9eb6be89b48499bdf42755022aee4d09ddafd87c4ffe52d843",
+  "receipt": {
+    "to": null,
+    "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "contractAddress": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    "transactionIndex": 0,
+    "gasUsed": "309910",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xbaf2b6127d6b76d896ce78dc9dc07b6ccaf88e84723dc63421e345a2723e5308",
+    "transactionHash": "0xe826f3ba981b5c9eb6be89b48499bdf42755022aee4d09ddafd87c4ffe52d843",
+    "logs": [],
+    "blockNumber": 3,
+    "cumulativeGasUsed": "309910",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    200000000000
+  ],
+  "numDeployments": 1,
+  "solcInputHash": "f9b6f202c6d59bb47ecdd333bf2aae0c",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_balance\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"asset\",\"type\":\"address\"}],\"name\":\"getReserveData\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"availableLiquidity\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalStableDebt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalVariableDebt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"liquidityRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"variableBorrowRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"stableBorrowRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"averageStableBorrowRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"liquidityIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"variableBorrowIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint40\",\"name\":\"lastUpdateTimestamp\",\"type\":\"uint40\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"asset\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserReserveData\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"currentATokenBalance\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentStableDebt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentVariableDebt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"principalStableDebt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"scaledVariableDebt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"stableBorrowRate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"liquidityRate\",\"type\":\"uint256\"},{\"internalType\":\"uint40\",\"name\":\"stableRateLastUpdated\",\"type\":\"uint40\"},{\"internalType\":\"bool\",\"name\":\"usageAsCollateralEnabled\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_balance\",\"type\":\"uint256\"}],\"name\":\"setMockedBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"getReserveData(address)\":{\"details\":\"Returns the reserve data for asset.\"},\"getUserReserveData(address,address)\":{\"details\":\"Returns the user's reserve data for asset.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/tests/MockProtocolDataProviderAAVE2.sol\":\"MockProtocolDataProviderAAVE2\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/IProtocolDataProviderAAVE2.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity 0.8.17;\\n\\n/**\\n * @dev AAVE2 interface to get the aToken balance from the underlying assset\\n */\\ninterface IProtocolDataProviderAAVE2 {\\n    /**\\n     * @dev Returns the user's reserve data for asset.\\n     */\\n    function getUserReserveData(address asset, address user)\\n        external\\n        view\\n        returns (\\n            uint256 currentATokenBalance,\\n            uint256 currentStableDebt,\\n            uint256 currentVariableDebt,\\n            uint256 principalStableDebt,\\n            uint256 scaledVariableDebt,\\n            uint256 stableBorrowRate,\\n            uint256 liquidityRate,\\n            uint40 stableRateLastUpdated,\\n            bool usageAsCollateralEnabled\\n        );\\n\\n    /**\\n     * @dev Returns the reserve data for asset.\\n     */\\n    function getReserveData(address asset)\\n        external\\n        view\\n        returns (\\n            uint256 availableLiquidity,\\n            uint256 totalStableDebt,\\n            uint256 totalVariableDebt,\\n            uint256 liquidityRate,\\n            uint256 variableBorrowRate,\\n            uint256 stableBorrowRate,\\n            uint256 averageStableBorrowRate,\\n            uint256 liquidityIndex,\\n            uint256 variableBorrowIndex,\\n            uint40 lastUpdateTimestamp\\n        );\\n}\",\"keccak256\":\"0x9485fe3231d1ba4dbf1b5f0c18fbc37b87b7f40646659c6a1a620023daaa5971\",\"license\":\"MIT\"},\"contracts/tests/MockProtocolDataProviderAAVE2.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity 0.8.17;\\n\\nimport \\\"../../contracts/IProtocolDataProviderAAVE2.sol\\\";\\n\\ncontract MockProtocolDataProviderAAVE2 is IProtocolDataProviderAAVE2 {\\n    uint256 private _mockedBalance;\\n\\n    constructor(uint256 _balance) {\\n        _mockedBalance = _balance;\\n    }\\n\\n    function getUserReserveData(address asset, address user)\\n        external\\n        view\\n        override\\n        returns (\\n            uint256 currentATokenBalance,\\n            uint256 currentStableDebt,\\n            uint256 currentVariableDebt,\\n            uint256 principalStableDebt,\\n            uint256 scaledVariableDebt,\\n            uint256 stableBorrowRate,\\n            uint256 liquidityRate,\\n            uint40 stableRateLastUpdated,\\n            bool usageAsCollateralEnabled\\n        )\\n    {\\n        return (_mockedBalance, 0, 0, 0, 0, 0, 0, 0, false);\\n    }\\n\\n    function getReserveData(address asset)\\n        external\\n        view\\n        override\\n        returns (\\n            uint256 availableLiquidity,\\n            uint256 totalStableDebt,\\n            uint256 totalVariableDebt,\\n            uint256 liquidityRate,\\n            uint256 variableBorrowRate,\\n            uint256 stableBorrowRate,\\n            uint256 averageStableBorrowRate,\\n            uint256 liquidityIndex,\\n            uint256 variableBorrowIndex,\\n            uint40 lastUpdateTimestamp\\n        ) {\\n            return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0);\\n        }\\n\\n    function setMockedBalance(uint256 _balance) external {\\n        _mockedBalance = _balance;\\n    }\\n}\",\"keccak256\":\"0xe008a00590569ec29b56ba285aeb54a7b20806577a5639f5a36be00d8efcafac\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506040516104e93803806104e98339818101604052810190610032919061007a565b80600081905550506100a7565b600080fd5b6000819050919050565b61005781610044565b811461006257600080fd5b50565b6000815190506100748161004e565b92915050565b6000602082840312156100905761008f61003f565b5b600061009e84828501610065565b91505092915050565b610433806100b66000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c80631c5018fd1461004657806328dd2d011461006257806335ea6a751461009a575b600080fd5b610060600480360381019061005b9190610192565b6100d3565b005b61007c6004803603810190610077919061021d565b6100dd565b604051610091999897969594939291906102a7565b60405180910390f35b6100b460048036038101906100af9190610334565b610118565b6040516100ca9a99989796959493929190610361565b60405180910390f35b8060008190555050565b600080600080600080600080600080546000806000806000806000809850985098509850985098509850985098509295985092959850929598565b60008060008060008060008060008060008060008060008060008060008099509950995099509950995099509950995099509193959799509193959799565b600080fd5b6000819050919050565b61016f8161015c565b811461017a57600080fd5b50565b60008135905061018c81610166565b92915050565b6000602082840312156101a8576101a7610157565b5b60006101b68482850161017d565b91505092915050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006101ea826101bf565b9050919050565b6101fa816101df565b811461020557600080fd5b50565b600081359050610217816101f1565b92915050565b6000806040838503121561023457610233610157565b5b600061024285828601610208565b925050602061025385828601610208565b9150509250929050565b6102668161015c565b82525050565b600064ffffffffff82169050919050565b6102868161026c565b82525050565b60008115159050919050565b6102a18161028c565b82525050565b6000610120820190506102bd600083018c61025d565b6102ca602083018b61025d565b6102d7604083018a61025d565b6102e4606083018961025d565b6102f1608083018861025d565b6102fe60a083018761025d565b61030b60c083018661025d565b61031860e083018561027d565b610326610100830184610298565b9a9950505050505050505050565b60006020828403121561034a57610349610157565b5b600061035884828501610208565b91505092915050565b600061014082019050610377600083018d61025d565b610384602083018c61025d565b610391604083018b61025d565b61039e606083018a61025d565b6103ab608083018961025d565b6103b860a083018861025d565b6103c560c083018761025d565b6103d260e083018661025d565b6103e061010083018561025d565b6103ee61012083018461027d565b9b9a505050505050505050505056fea26469706673582212209b9c3c0106337eb7b5b58ca8040880a2e53b03ea90c6129a9f6ba884df65b29564736f6c63430008110033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c80631c5018fd1461004657806328dd2d011461006257806335ea6a751461009a575b600080fd5b610060600480360381019061005b9190610192565b6100d3565b005b61007c6004803603810190610077919061021d565b6100dd565b604051610091999897969594939291906102a7565b60405180910390f35b6100b460048036038101906100af9190610334565b610118565b6040516100ca9a99989796959493929190610361565b60405180910390f35b8060008190555050565b600080600080600080600080600080546000806000806000806000809850985098509850985098509850985098509295985092959850929598565b60008060008060008060008060008060008060008060008060008060008099509950995099509950995099509950995099509193959799509193959799565b600080fd5b6000819050919050565b61016f8161015c565b811461017a57600080fd5b50565b60008135905061018c81610166565b92915050565b6000602082840312156101a8576101a7610157565b5b60006101b68482850161017d565b91505092915050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b60006101ea826101bf565b9050919050565b6101fa816101df565b811461020557600080fd5b50565b600081359050610217816101f1565b92915050565b6000806040838503121561023457610233610157565b5b600061024285828601610208565b925050602061025385828601610208565b9150509250929050565b6102668161015c565b82525050565b600064ffffffffff82169050919050565b6102868161026c565b82525050565b60008115159050919050565b6102a18161028c565b82525050565b6000610120820190506102bd600083018c61025d565b6102ca602083018b61025d565b6102d7604083018a61025d565b6102e4606083018961025d565b6102f1608083018861025d565b6102fe60a083018761025d565b61030b60c083018661025d565b61031860e083018561027d565b610326610100830184610298565b9a9950505050505050505050565b60006020828403121561034a57610349610157565b5b600061035884828501610208565b91505092915050565b600061014082019050610377600083018d61025d565b610384602083018c61025d565b610391604083018b61025d565b61039e606083018a61025d565b6103ab608083018961025d565b6103b860a083018861025d565b6103c560c083018761025d565b6103d260e083018661025d565b6103e061010083018561025d565b6103ee61012083018461027d565b9b9a505050505050505050505056fea26469706673582212209b9c3c0106337eb7b5b58ca8040880a2e53b03ea90c6129a9f6ba884df65b29564736f6c63430008110033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "getReserveData(address)": {
+        "details": "Returns the reserve data for asset."
+      },
+      "getUserReserveData(address,address)": {
+        "details": "Returns the user's reserve data for asset."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 124,
+        "contract": "contracts/tests/MockProtocolDataProviderAAVE2.sol:MockProtocolDataProviderAAVE2",
+        "label": "_mockedBalance",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

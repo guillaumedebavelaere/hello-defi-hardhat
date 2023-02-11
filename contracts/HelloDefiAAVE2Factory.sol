@@ -8,7 +8,8 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 
 /**
  * @title HelloDefiAAVE2Factory
- * @dev This smart contract creates and keep track of the HelloDefiAAVE2 smart contract using the clone pattern in order to save gas.
+ * @dev This smart contract creates and keep track of the HelloDefiAAVE2 smart contract using 
+ * the clone pattern in order to save gas.
  */
 contract HelloDefiAAVE2Factory {
     address immutable helloDefiAAVE2TemplateAddress;
@@ -20,18 +21,18 @@ contract HelloDefiAAVE2Factory {
     // mapping to keep track of the user smart contracts: user's adress => HelloDefiAAVE2 smart contract.
     mapping(address => address) public userContracts;
 
-    event CloneCreated(address indexed  _owner, address _clone);
+    event CloneCreated(address indexed _owner, address _clone);
 
     constructor(
         address _aaveLendingPoolAddress,
         address _aaveProtocolDataProviderAddress,
-        address  _priceFeedAddress,
+        address _priceFeedAddress,
         address _feesManagerAddress
     ) {
         helloDefiAAVE2TemplateAddress = address(new HelloDefiAAVE2());
         aaveLendingPoolAddress = _aaveLendingPoolAddress;
         aaveProtocolDataProviderAddress = _aaveProtocolDataProviderAddress;
-        priceFeedAddress =  _priceFeedAddress;
+        priceFeedAddress = _priceFeedAddress;
         feesManagerAddress = _feesManagerAddress;
     }
 

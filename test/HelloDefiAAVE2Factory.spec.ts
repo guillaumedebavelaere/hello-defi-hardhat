@@ -1,6 +1,6 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, deployments, getNamedAccounts } from "hardhat";
 
 
 describe("HelloDefiAAVE2Factory test", async () => {
@@ -9,21 +9,13 @@ describe("HelloDefiAAVE2Factory test", async () => {
     // We use loadFixture to run this setup once, snapshot that state,
     // and reset Hardhat Network to that snapshot in every test.
     const deployHelloDefiAAVE2FactoryFixture = async () => {
-        const _aaveILendingPoolAddress = "0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210"; // fake address, not used
-        const _aaveProtocolDataProviderAddress = "0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210"; // fake address, not used
-        const _priceFeedAddress = "0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210"; // fake address, not used
-        const _feesManagerAddress = "0x4bd5643ac6f66a5237E18bfA7d47cF22f1c9F210"; // fake address, not used
-
         // Contracts are deployed using the first signer/account by default
         const [owner, otherAccount1, otherAccount2] = await ethers.getSigners();
 
-        const HelloDefiAAVE2Factory = await ethers.getContractFactory("HelloDefiAAVE2Factory");
-        const helloDefiAAVE2Factory = await HelloDefiAAVE2Factory.deploy(
-            _aaveILendingPoolAddress,
-                _aaveProtocolDataProviderAddress,
-                _priceFeedAddress,
-                _feesManagerAddress
-        );
+        await deployments.fixture(["all"]);
+        const {deployer} = await getNamedAccounts()
+        
+        const helloDefiAAVE2Factory = await ethers.getContract("HelloDefiAAVE2Factory", deployer);
 
         return { helloDefiAAVE2Factory, owner, otherAccount1, otherAccount2 };
     }

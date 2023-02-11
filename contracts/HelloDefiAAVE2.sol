@@ -64,9 +64,11 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
     }
 
     /**
-     * @dev Deposits an `amount` of underlying asset into this smart contract. Referal fees are applied. Then the smart contract deposits the (amount - fees) into
+     * @dev Deposits an `amount` of underlying asset into this smart contract. Referal fees are applied. 
+     * Then the smart contract deposits the (amount - fees) into
      * AAVE in behalf of the user, receiving in return overlying aTokens in the smart contract.
-     * - E.g. User deposits 100 USDC to the SC and the SC will deposit into AAVE 98 USDC to get in return 98 aUSDC (received into the SC).
+     * - E.g. User deposits 100 USDC to the SC and the SC will deposit into AAVE 98 USDC to get in return 98 aUSDC 
+     * (received into the SC).
      * Before calling this function, it requires the user to approve this smart contract to spend his asset.
      * @param _asset The address of the underlying asset to deposit.
      * @param _amount The amount to be deposited.
@@ -99,8 +101,10 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
     }
 
     /**
-     * @dev Withdraws an `amount` of underlying _asset from the AAVE reserve, burning the equivalent aTokens owned by the smart contract
-     * E.g. Smart contract has 100 aUSDC, calls withdraw() and receives 100 USDC, burning the 100 aUSDC. 100 USDC are then returned to the user (msg.sender)
+     * @dev Withdraws an `amount` of underlying _asset from the AAVE reserve, burning the equivalent aTokens 
+     * owned by the smart contract.
+     * E.g. Smart contract has 100 aUSDC, calls withdraw() and receives 100 USDC, burning the 100 aUSDC. 
+     * 100 USDC are then returned to the user (msg.sender)
      * @param _asset The address of the underlying asset to withdraw
      * @param _amount The underlying amount to be withdrawn
      **/
@@ -143,7 +147,8 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
 
     /**
      * _collectReferalFees verifies first if the user has a referal wealth manager.
-     * If it is the case, it computes the fees and substract from the deposited amount and transfer to the FeesCollector.
+     * If it is the case, it computes the fees and substract from the deposited amount and transfer to 
+     * the FeesCollector.
      * @param _asset asset to deposit
      * @param _amount asset quantity to deposit
      * @return the remaining amount after the applied fees.

@@ -1,11 +1,10 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { MockContract } from "ethereum-waffle";
-import { ethers, waffle } from "hardhat";
-import { FeesCollector, HelloDefiAAVE2, HelloDefiAAVE2__factory, ILendingPoolAAVE2, ILendingPoolAAVE2__factory, IProtocolDataProviderAAVE2, PriceFeedConsumer, PriceFeedConsumer__factory, TestERC20 } from "../typechain-types";
+import { MockContract, deployMockContract } from "@ethereum-waffle/mock-contract";
+import { ethers } from "hardhat";
+import { FeesCollector, HelloDefiAAVE2 } from "../typechain-types";
 
-const { deployMockContract } = waffle
 import ILendingPoolAAVE2Json from "../artifacts/contracts/ILendingPoolAAVE2.sol/ILendingPoolAAVE2.json";
 import IProtocolDataProviderAAVE2Json from "../artifacts/contracts/IProtocolDataProviderAAVE2.sol/IProtocolDataProviderAAVE2.json";
 import PriceFeedConsumerJson from "../artifacts/contracts/PriceFeedConsumer.sol/PriceFeedConsumer.json";
@@ -17,10 +16,10 @@ describe("HelloDefiAAVE2 contract test", async () => {
     const deployHelloDefiAAVE2Fixture = async () => {
         const [owner, account1] = await ethers.getSigners();
         const FeesCollector = await ethers.getContractFactory("FeesCollector");
-        const feesCollectorhelloDefiAAVE2 = await FeesCollector.deploy();
+        const feesCollectorhelloDefiAAVE2: FeesCollector = await FeesCollector.deploy();
 
         const HelloDefiAAVE2 = await ethers.getContractFactory("HelloDefiAAVE2");
-        const helloDefiAAVE2 = await HelloDefiAAVE2.deploy();
+        const helloDefiAAVE2: HelloDefiAAVE2 = await HelloDefiAAVE2.deploy();
 
         const aaveLendingPool = await deployMockContract(owner, ILendingPoolAAVE2Json.abi);
         await aaveLendingPool.mock.withdraw.returns(1)
@@ -44,15 +43,15 @@ describe("HelloDefiAAVE2 contract test", async () => {
         let account1: SignerWithAddress;
 
         beforeEach(async () => {
-            const result = {
-                helloDefiAAVE2: helloDefiAAVE2,
-                aaveLendingPool: aaveLendingPool,
-                aaveProtocolDataProvider: aaveProtocolDataProvider,
-                priceFeedConsumer: priceFeedConsumer,
-                feesCollectorhelloDefiAAVE2: feesCollectorhelloDefiAAVE2,
-                owner: owner,
-                account1: account1
-            } = await loadFixture(deployHelloDefiAAVE2Fixture);
+            ({
+                helloDefiAAVE2,
+                aaveLendingPool,
+                aaveProtocolDataProvider,
+                priceFeedConsumer,
+                feesCollectorhelloDefiAAVE2,
+                owner,
+                account1
+            } = await loadFixture(deployHelloDefiAAVE2Fixture));
 
 
             await helloDefiAAVE2.initialize(
@@ -78,7 +77,7 @@ describe("HelloDefiAAVE2 contract test", async () => {
                     priceFeedConsumer.address,
                     feesCollectorhelloDefiAAVE2.address,
                     account1.address
-                )).to.be.revertedWith("contract is already initialized");
+                )).to.be.revertedWith("Initializable: contract is already initialized");
             });
         });
     });
@@ -94,15 +93,15 @@ describe("HelloDefiAAVE2 contract test", async () => {
 
         let erc20: Contract;
         beforeEach(async () => {
-            const result = {
-                helloDefiAAVE2: helloDefiAAVE2,
-                aaveLendingPool: aaveLendingPool,
-                aaveProtocolDataProvider: aaveProtocolDataProvider,
-                priceFeedConsumer: priceFeedConsumer,
-                feesCollectorhelloDefiAAVE2: feesCollectorhelloDefiAAVE2,
-                owner: owner,
-                account1: account1
-            } = await loadFixture(deployHelloDefiAAVE2Fixture);
+            ({
+                helloDefiAAVE2,
+                aaveLendingPool,
+                aaveProtocolDataProvider,
+                priceFeedConsumer,
+                feesCollectorhelloDefiAAVE2,
+                owner,
+                account1
+            } = await loadFixture(deployHelloDefiAAVE2Fixture));
 
             await helloDefiAAVE2.initialize(
                 aaveLendingPool.address,
@@ -117,7 +116,7 @@ describe("HelloDefiAAVE2 contract test", async () => {
 
         it("should revert if not called by the owner", async () => {
             await expect(helloDefiAAVE2.connect(account1).deposit(erc20.address, utils.parseEther("100000")))
-                .to.be.revertedWith("caller is not the owner");
+                .to.be.revertedWith("Ownable: caller is not the owner");
         });
 
         it("should revert if the amount asked is 0", async () => {
@@ -223,7 +222,7 @@ describe("HelloDefiAAVE2 contract test", async () => {
 
         it("should revert if the user is not the owner", async () => {
             await expect(helloDefiAAVE2.connect(account1).withdraw(erc20.address, utils.parseEther("100000")))
-                .to.be.revertedWith("caller is not the owner");
+                .to.be.revertedWith("Ownable: caller is not the owner");
         });
 
         it("should revert if amount asked is 0", async () => {

@@ -10,7 +10,7 @@ const deployHelloDefi: DeployFunction = async function (hre: HardhatRuntimeEnvir
   const { deployer } = await getNamedAccounts();
 
   const extraConfig = networkConfig[chainId];
-  let daiUsdPriceFeed, linkUsdPriceFeed, aave2DataProvider, aave2LendingPool, verifyContract;
+  let daiUsdPriceFeed, linkUsdPriceFeed, aave2DataProvider, aave2LendingPool, verifyContract, blockConfirmations;
 
   if (developmentChains.includes(chainId)) {
     const priceFeedAggregator = await deployments.get("MockV3Aggregator");
@@ -24,9 +24,10 @@ const deployHelloDefi: DeployFunction = async function (hre: HardhatRuntimeEnvir
     aave2DataProvider = mockProtocolDataProviderAAVE2.address;
 
     verifyContract = false;
+    blockConfirmations = 0;
 
   } else {
-     ({daiUsdPriceFeed, linkUsdPriceFeed, aave2LendingPool, aave2DataProvider, verifyContract} = extraConfig);
+     ({daiUsdPriceFeed, linkUsdPriceFeed, aave2LendingPool, aave2DataProvider, verifyContract, blockConfirmations} = extraConfig);
   }
 
   const priceFeedConsumer = await deploy("PriceFeedConsumer", {
@@ -55,7 +56,7 @@ const deployHelloDefi: DeployFunction = async function (hre: HardhatRuntimeEnvir
     ],
     log: true,
     autoMine: true, // speed up deployment on local network (ganache, hardhat), no effect on live networks
-    waitConfirmations: network.config.blockConfirmations || 1
+    waitConfirmations: blockConfirmations
   });
   
   if (verifyContract && process.env.ETHERSCAN_API_KEY) { // Goerli

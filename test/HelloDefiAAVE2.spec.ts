@@ -2,7 +2,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { MockContract, deployMockContract } from "@ethereum-waffle/mock-contract";
-import { ethers } from "hardhat";
+import { ethers, deployments } from "hardhat";
 import { FeesCollector, HelloDefiAAVE2 } from "../typechain-types";
 
 import ILendingPoolAAVE2Json from "../artifacts/contracts/ILendingPoolAAVE2.sol/ILendingPoolAAVE2.json";
@@ -15,11 +15,11 @@ describe("HelloDefiAAVE2 contract test", async () => {
 
     const deployHelloDefiAAVE2Fixture = async () => {
         const [owner, account1] = await ethers.getSigners();
-        const FeesCollector = await ethers.getContractFactory("FeesCollector");
-        const feesCollectorhelloDefiAAVE2: FeesCollector = await FeesCollector.deploy();
+        await deployments.fixture(["all"])
+        const feesCollectorhelloDefiAAVE2: FeesCollector = await ethers.getContract("FeesCollector");
 
-        const HelloDefiAAVE2 = await ethers.getContractFactory("HelloDefiAAVE2");
-        const helloDefiAAVE2: HelloDefiAAVE2 = await HelloDefiAAVE2.deploy();
+        await deployments.deploy("HelloDefiAAVE2", {from: owner.address});
+        const helloDefiAAVE2: HelloDefiAAVE2 = await ethers.getContract("HelloDefiAAVE2");
 
         const aaveLendingPool = await deployMockContract(owner, ILendingPoolAAVE2Json.abi);
         await aaveLendingPool.mock.withdraw.returns(1)
@@ -120,16 +120,15 @@ describe("HelloDefiAAVE2 contract test", async () => {
         });
 
         it("should revert if the amount asked is 0", async () => {
-            await expect(helloDefiAAVE2.deposit(erc20.address, utils.parseEther("0")),
-                "amount must be > 0!")
+            await expect(helloDefiAAVE2.deposit(erc20.address, utils.parseEther("0")))
+                .to.be.revertedWith("amount must be > 0!");
         });
 
         it("should revert if the smart contract has no allowance to spend the user's erc20", async () => {
             expect(await erc20.balanceOf(owner.address)).to.equal(utils.parseEther("100000"));
 
-            await expect(helloDefiAAVE2.deposit(erc20.address, utils.parseEther("100000")),
-                "insufficient allowance"
-            );
+            await expect(helloDefiAAVE2.deposit(erc20.address, utils.parseEther("100000")))
+                .to.be.revertedWith("ERC20: insufficient allowance");
         });
 
         context("when the smart contract has allowance", async () => {
@@ -139,9 +138,8 @@ describe("HelloDefiAAVE2 contract test", async () => {
             });
 
             it("should revert if the amount is greater than the allowance", async () => {
-                await expect(helloDefiAAVE2.deposit(erc20.address, utils.parseEther("100000"), { from: owner.address }),
-                    "insufficient allowance"
-                );
+                await expect(helloDefiAAVE2.deposit(erc20.address, utils.parseEther("100000"), { from: owner.address }))
+                    .to.be.revertedWith("ERC20: insufficient allowance");
             });
 
             it("should transfer (erc20 - the fees) from the user to the smart contract", async () => {
@@ -164,9 +162,7 @@ describe("HelloDefiAAVE2 contract test", async () => {
             it("should emit a Deposit event", async () => {
                 expect(await helloDefiAAVE2.deposit(erc20.address, utils.parseEther("50"), { from: owner.address }))
                     .to.emit(helloDefiAAVE2,
-                        "Deposit").withArgs(
-                            { _erc20: erc20.address, _amount: utils.parseEther("49") }
-                        );
+                        "Deposit").withArgs(erc20.address,utils.parseEther("49"));
             });
 
             it("should transfer the referal fees to the collector", async () => {
@@ -249,7 +245,7 @@ describe("HelloDefiAAVE2 contract test", async () => {
             expect(await helloDefiAAVE2.withdraw(erc20.address, utils.parseEther("49"))).to.emit(
                 helloDefiAAVE2,
                 "Withdraw"
-            ).withArgs({ _erc20: erc20.address, _amount: utils.parseEther("49") });
+            ).withArgs(erc20.address,utils.parseEther("49"));
         });
 
         context("When the user makes a profit in $, but with no rewards", async () => {

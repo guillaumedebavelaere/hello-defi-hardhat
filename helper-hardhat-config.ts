@@ -5,7 +5,8 @@ const networkConfig: ExtraConfig = {
         aave2DataProvider: "0x927F584d4321C1dCcBf5e2902368124b02419a1E",
         linkUsdPriceFeed: "0x48731cF7e84dc94C5f84577882c14Be11a5B7456",
         daiUsdPriceFeed: "0x0d79df66BE487753B02D015Fb622DED7f0E9798d",
-        verifyContract: true
+        verifyContract: true,
+        blockConfirmations: 6
     },
     80001: {
         name: "mumbai",
@@ -13,7 +14,8 @@ const networkConfig: ExtraConfig = {
         aave2DataProvider: "0xFA3bD19110d986c5e5E9DD5F69362d05035D045B",
         linkUsdPriceFeed: "0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408",
         daiUsdPriceFeed: "0x0FCAa9c899EC5A91eBc3D5Dd869De833b06fB046",
-        verifyContract: true
+        verifyContract: true,
+        blockConfirmations: 6
     }
 }
 
@@ -27,6 +29,7 @@ interface ExtraConfig {
         linkUsdPriceFeed: string;
         daiUsdPriceFeed: string;
         verifyContract: boolean;
+        blockConfirmations: number;
     }
   }
 

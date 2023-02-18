@@ -1,7 +1,7 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { Contract, ContractFactory, utils } from "ethers";
-import { ethers } from "hardhat";
+import { ethers, deployments } from "hardhat";
 
 import ERC20 from "./helpers/TestERC20.json";
 import { FeesCollector } from "../typechain-types";
@@ -10,9 +10,8 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 describe("FeesCollector test", async () => {
     const deployFeesCollectorFixture = async () => {
         const [owner, otherAccount1] = await ethers.getSigners();
-
-        const FeesCollector = await ethers.getContractFactory("FeesCollector");
-        const feesCollector = await FeesCollector.deploy();
+        await deployments.fixture(["all"])
+        const feesCollector: FeesCollector = await ethers.getContract("FeesCollector");
 
         const contractFactory = new ContractFactory(ERC20.abi, ERC20.bytecode, owner);
         const erc20 = await contractFactory.deploy(utils.parseEther("100000"));

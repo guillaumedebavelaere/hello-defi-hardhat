@@ -1,16 +1,16 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import * as dotenv from 'dotenv';
-import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
+import "hardhat-deploy";
 
 dotenv.config();
 
 const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
 const MUMBAI_RPC_URL = process.env.MUMBAI_RPC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "set-your-private-key-in-dotenv";
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
-const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY;
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "set-your-etherscan-key-in-dotenv";
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "set-your-polygonscan-key-in-dotenv";
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
@@ -18,14 +18,12 @@ const config: HardhatUserConfig = {
     goerli: {
       url: GOERLI_RPC_URL,
       accounts: [PRIVATE_KEY],
-      chainId: 5,
-      blockConfirmations: 6
+      chainId: 5
     },
     mumbai: {
       url: MUMBAI_RPC_URL,
       accounts: [PRIVATE_KEY],
-      chainId: 80001,
-      blockConfirmations: 6
+      chainId: 80001
     },
     localhost: {
       url: "http://127.0.0.1:8545/",

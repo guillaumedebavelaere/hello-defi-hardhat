@@ -1,6 +1,7 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers, deployments, getNamedAccounts } from "hardhat";
+import { HelloDefiAAVE2 } from "../typechain-types";
 
 
 describe("HelloDefiAAVE2Factory test", async () => {
@@ -13,9 +14,8 @@ describe("HelloDefiAAVE2Factory test", async () => {
         const [owner, otherAccount1, otherAccount2] = await ethers.getSigners();
 
         await deployments.fixture(["all"]);
-        const {deployer} = await getNamedAccounts()
         
-        const helloDefiAAVE2Factory = await ethers.getContract("HelloDefiAAVE2Factory", deployer);
+        const helloDefiAAVE2Factory = await ethers.getContract("HelloDefiAAVE2Factory");
 
         return { helloDefiAAVE2Factory, owner, otherAccount1, otherAccount2 };
     }
@@ -50,17 +50,20 @@ describe("HelloDefiAAVE2Factory test", async () => {
 
         it("should emit a CloneCreated event", async () => {
             const {helloDefiAAVE2Factory, owner, otherAccount1, otherAccount2} = await loadFixture(deployHelloDefiAAVE2FactoryFixture);
-            let receiptOwner = await helloDefiAAVE2Factory.connect(owner).createClone();
-            let receiptAccount1 = await helloDefiAAVE2Factory.connect(otherAccount1).createClone();
-            let receiptAccount2 = await helloDefiAAVE2Factory.connect(otherAccount2).createClone();
+            let receiptOwner: HelloDefiAAVE2 = await helloDefiAAVE2Factory.connect(owner).createClone();
+            let receiptAccount1: HelloDefiAAVE2 = await helloDefiAAVE2Factory.connect(otherAccount1).createClone();
+            let receiptAccount2: HelloDefiAAVE2 = await helloDefiAAVE2Factory.connect(otherAccount2).createClone();
 
             const ownerCloneAddress = await helloDefiAAVE2Factory.userContracts(owner.address);
             const accountCloneAddress = await helloDefiAAVE2Factory.userContracts(otherAccount1.address);
             const account2CloneAddress = await helloDefiAAVE2Factory.userContracts(otherAccount2.address);
 
-            expect(receiptOwner).to.emit(receiptOwner, "CloneCreated").withArgs({ _owner: owner.address, _clone: ownerCloneAddress });
-            expect(receiptAccount1).to.emit(receiptAccount1, "CloneCreated").withArgs({ _owner: otherAccount1.address, _clone: accountCloneAddress });
-            expect(receiptAccount2).to.emit(receiptAccount2, "CloneCreated").withArgs({ _owner: otherAccount2.address, _clone: account2CloneAddress });
+            expect(receiptOwner)
+                .to.emit(helloDefiAAVE2Factory, "CloneCreated").withArgs(owner.address, ownerCloneAddress);
+            expect(receiptAccount1)
+                .to.emit(helloDefiAAVE2Factory, "CloneCreated").withArgs(otherAccount1.address, accountCloneAddress);
+            expect(receiptAccount2)
+                .to.emit(helloDefiAAVE2Factory, "CloneCreated").withArgs(otherAccount2.address, account2CloneAddress);
         });
 
     });

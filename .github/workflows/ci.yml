@@ -3,16 +3,13 @@ name: CI
 # Controls when the workflow will run
 on: push
 
-env:
-  # Setting an environment variable with the value of a configuration variable
-  PRIVATE_KEY: ${{ vars.PRIVATE_KEY }}
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 # This workflow contains a single job called "build"
   build:
 # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    environment: staging
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -28,6 +25,12 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
+      - name: Create env file
+        run: |
+          echo "${{ secrets.QA_ENV_FILE }}" | base64 --decode > .env
+        # cat .env
+        # [ "$YOUR_ENVIRONMENT" = prod ] && echo $PROD_ENV_FILE | base64 --decode > .env
+
       # Compile
       - name: Compile
         run: yarn hardhat compile
@@ -41,7 +44,7 @@ jobs:
         run: REPORT_GAS=true yarn hardhat test --typecheck
 
       # Coverage
-      - name: coverage
+      - name: Coverage
         id: coverage
         run: yarn hardhat coverage
 

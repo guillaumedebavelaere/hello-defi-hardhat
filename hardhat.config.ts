@@ -6,8 +6,8 @@ import "hardhat-deploy";
 
 dotenv.config();
 
-const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
-const MUMBAI_RPC_URL = process.env.MUMBAI_RPC_URL;
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || "set-goerli-rpc-url-in-dotenv";
+const MUMBAI_RPC_URL = process.env.MUMBAI_RPC_URL || "set-mumbai-rpc-url-in-dotenv";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "set-your-private-key-in-dotenv";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "set-your-etherscan-key-in-dotenv";
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "set-your-polygonscan-key-in-dotenv";

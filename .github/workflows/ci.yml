@@ -1,0 +1,53 @@
+name: CI
+
+# Controls when the workflow will run
+on: push
+
+env:
+  # Setting an environment variable with the value of a configuration variable
+  PRIVATE_KEY: ${{ vars.PRIVATE_KEY }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+# This workflow contains a single job called "build"
+  build:
+# The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Setup yarn
+        run: npm install -g yarn
+
+      - name: Install Dependencies
+        run: yarn install
+
+      # Compile
+      - name: Compile
+        run: yarn hardhat compile
+
+      # Solhint
+      - name: Linter
+        run: yarn hardhat check
+
+      # Tests
+      - name: Test
+        run: REPORT_GAS=true yarn hardhat test --typecheck
+
+      # Coverage
+      - name: coverage
+        id: coverage
+        run: yarn hardhat coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+

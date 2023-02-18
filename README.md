@@ -1,3 +1,7 @@
+[![CI](https://github.com/guillaumedebavelaere/hello-defi-hardhat/actions/workflows/ci.yml/badge.svg)](https://github.com/guillaumedebavelaere/hello-defi-hardhat/actions/workflows/ci.yml)
+
+[![Coverage Status](https://coveralls.io/repos/github/guillaumedebavelaere/hello-defi-hardhat/badge.svg?branch=master)](https://coveralls.io/github/guillaumedebavelaere/hello-defi-hardhat?branch=master)
+
 # HelloDefi hardhat + ethers
 
 This project is the same as https://github.com/guillaumedebavelaere/HelloDefi, but uses different tools:

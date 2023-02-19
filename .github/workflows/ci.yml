@@ -10,6 +10,9 @@ jobs:
 # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment: staging
+    defaults:
+      run:
+        working-directory: ./hardhat
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -51,6 +54,7 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
+          path-to-lcov: ./hardhat/coverage/lcov.info
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
 

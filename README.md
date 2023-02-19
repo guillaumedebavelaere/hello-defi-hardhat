@@ -21,7 +21,11 @@ In addition:
 - Yarn
 - Hardhat
 
-## Installation
+## Smart contract installation
+
+```
+cd ./hardhat
+```
 
 ```
 yarn install

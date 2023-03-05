@@ -12,7 +12,7 @@ const deployHelloDefi: DeployFunction = async function (hre: HardhatRuntimeEnvir
   const extraConfig = networkConfig[chainId];
   let daiUsdPriceFeed, linkUsdPriceFeed, aave2DataProvider, aave2LendingPool, verifyContract, blockConfirmations;
 
-  if (developmentChains.includes(chainId)) {
+  if (developmentChains.includes(network.name)) {
     const priceFeedAggregator = await deployments.get("MockV3Aggregator");
     daiUsdPriceFeed = priceFeedAggregator.address;
     linkUsdPriceFeed = priceFeedAggregator.address;

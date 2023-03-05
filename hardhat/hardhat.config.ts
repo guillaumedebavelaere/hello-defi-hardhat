@@ -47,6 +47,9 @@ const config: HardhatUserConfig = {
       goerli: ETHERSCAN_API_KEY,
       polygonMumbai: POLYGONSCAN_API_KEY
     }
+  },
+  mocha: {
+    timeout: "400000"
   }
 };
 

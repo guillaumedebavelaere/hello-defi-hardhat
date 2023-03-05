@@ -6,9 +6,8 @@ import { developmentChains } from '../helper-hardhat-config';
 const deployMocks: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts, network } = hre;
   const { deploy, log } = deployments;
-  const chainId = network.config.chainId || "";
 
-  if (developmentChains.includes(chainId)) {
+  if (developmentChains.includes(network.name)) {
     const { deployer } = await getNamedAccounts();
     const decimals = 8;
     const initialAnswer = 200000000000;

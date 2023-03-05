@@ -15,6 +15,7 @@ In addition:
 - Added solhint
 - Change the deployment config with the use of hardhat-deploy plugin, so it is easier to deploy on multiple chains
 - Added Mumbai deployment config
+- Added staging test + separateed into sub directories unit tests and staging test 
 
 ## Requirments
 - Node 16 

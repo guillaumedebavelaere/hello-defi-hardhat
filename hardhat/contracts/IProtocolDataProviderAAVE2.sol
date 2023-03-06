@@ -8,7 +8,10 @@ interface IProtocolDataProviderAAVE2 {
     /**
      * @dev Returns the user's reserve data for asset.
      */
-    function getUserReserveData(address asset, address user)
+    function getUserReserveData(
+        address asset,
+        address user
+    )
         external
         view
         returns (
@@ -26,7 +29,9 @@ interface IProtocolDataProviderAAVE2 {
     /**
      * @dev Returns the reserve data for asset.
      */
-    function getReserveData(address asset)
+    function getReserveData(
+        address asset
+    )
         external
         view
         returns (

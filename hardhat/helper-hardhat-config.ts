@@ -7,7 +7,7 @@ const networkConfig: ExtraConfig = {
         linkUsdPriceFeed: "0x48731cF7e84dc94C5f84577882c14Be11a5B7456",
         daiUsdPriceFeed: "0x0d79df66BE487753B02D015Fb622DED7f0E9798d",
         verifyContract: true,
-        blockConfirmations: 6
+        blockConfirmations: 6,
     },
     80001: {
         name: "mumbai",
@@ -17,15 +17,15 @@ const networkConfig: ExtraConfig = {
         linkUsdPriceFeed: "0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408",
         daiUsdPriceFeed: "0x0FCAa9c899EC5A91eBc3D5Dd869De833b06fB046",
         verifyContract: true,
-        blockConfirmations: 6
-    }
-}
+        blockConfirmations: 6,
+    },
+};
 
-const developmentChains = ["hardhat", "localhost"]
+const developmentChains = ["hardhat", "localhost"];
 
 interface ExtraConfig {
-    [key: number]: { 
-        name: string; 
+    [key: number]: {
+        name: string;
         aave2LendingPool: string;
         aave2DataProvider: string;
         daiContract: string;
@@ -33,10 +33,7 @@ interface ExtraConfig {
         daiUsdPriceFeed: string;
         verifyContract: boolean;
         blockConfirmations: number;
-    }
-  }
-
-export {
-    networkConfig,
-    developmentChains,
+    };
 }
+
+export { networkConfig, developmentChains };

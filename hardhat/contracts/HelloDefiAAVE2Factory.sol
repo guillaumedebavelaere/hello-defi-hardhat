@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 
 /**
  * @title HelloDefiAAVE2Factory
- * @dev This smart contract creates and keep track of the HelloDefiAAVE2 smart contract using 
+ * @dev This smart contract creates and keep track of the HelloDefiAAVE2 smart contract using
  * the clone pattern in order to save gas.
  */
 contract HelloDefiAAVE2Factory {

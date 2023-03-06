@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/interfaces/IERC20Metadata.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @title HelloDefiAAVE2
@@ -64,10 +63,10 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
     }
 
     /**
-     * @dev Deposits an `amount` of underlying asset into this smart contract. Referal fees are applied. 
+     * @dev Deposits an `amount` of underlying asset into this smart contract. Referal fees are applied.
      * Then the smart contract deposits the (amount - fees) into
      * AAVE in behalf of the user, receiving in return overlying aTokens in the smart contract.
-     * - E.g. User deposits 100 USDC to the SC and the SC will deposit into AAVE 98 USDC to get in return 98 aUSDC 
+     * - E.g. User deposits 100 USDC to the SC and the SC will deposit into AAVE 98 USDC to get in return 98 aUSDC
      * (received into the SC).
      * Before calling this function, it requires the user to approve this smart contract to spend his asset.
      * @param _asset The address of the underlying asset to deposit.
@@ -101,25 +100,26 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
     }
 
     /**
-     * @dev Withdraws an `amount` of underlying _asset from the AAVE reserve, burning the equivalent aTokens 
+     * @dev Withdraws an `amount` of underlying _asset from the AAVE reserve, burning the equivalent aTokens
      * owned by the smart contract.
-     * E.g. Smart contract has 100 aUSDC, calls withdraw() and receives 100 USDC, burning the 100 aUSDC. 
+     * E.g. Smart contract has 100 aUSDC, calls withdraw() and receives 100 USDC, burning the 100 aUSDC.
      * 100 USDC are then returned to the user (msg.sender)
      * @param _asset The address of the underlying asset to withdraw
      * @param _amount The underlying amount to be withdrawn
      **/
     function withdraw(address _asset, uint256 _amount) external onlyOwner {
         require(_amount > 0, "_amount must be > 0!");
-
         // Getting total balance (deposited + rewards)
         (uint256 totalBalance, , , , , , , , ) = _aaveProtocoDataProvider
             .getUserReserveData(_asset, address(this));
         require(_amount <= totalBalance, "Insufficiant balance");
-
         // collect performance fees
         uint256 lastPrice = _priceFeed.getLatestPrice(_asset);
-        uint256 totalRemainingBalance = _collectPerformanceFees(_asset, totalBalance, lastPrice);
-
+        uint256 totalRemainingBalance = _collectPerformanceFees(
+            _asset,
+            totalBalance,
+            lastPrice
+        );
         // If the user withdraw all of it
         if (_amount > totalRemainingBalance) {
             _amount = totalRemainingBalance;
@@ -131,40 +131,33 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
             _aaveLendingPool.withdraw(_asset, _amount, address(this)) > 0,
             "0 whithdrawn from AAVE!"
         );
-
         // Update the user asset's balance and avg cost
         depositedBalance[_asset] = (totalRemainingBalance - _amount);
         assetAvgCost[_asset] = lastPrice;
 
         //Transfers the asset from this smart contract to user's wallet
-        IERC20(_asset).safeTransfer(
-            msg.sender,
-            _amount
-        );
+        IERC20(_asset).safeTransfer(msg.sender, _amount);
 
         emit Withdraw(_asset, _amount);
     }
 
     /**
      * _collectReferalFees verifies first if the user has a referal wealth manager.
-     * If it is the case, it computes the fees and substract from the deposited amount and transfer to 
+     * If it is the case, it computes the fees and substract from the deposited amount and transfer to
      * the FeesCollector.
      * @param _asset asset to deposit
      * @param _amount asset quantity to deposit
      * @return the remaining amount after the applied fees.
      */
-    function _collectReferalFees(address _asset, uint256 _amount)
-        private
-        returns (uint256)
-    {
+    function _collectReferalFees(
+        address _asset,
+        uint256 _amount
+    ) private returns (uint256) {
         require(_amount > 100);
         uint256 fees = (_amount * _referalCommission) / 100;
 
         // Transfer referal fees to the fees collector
-        IERC20(_asset).safeTransfer(
-            address(_feesCollector),
-            fees
-        );
+        IERC20(_asset).safeTransfer(address(_feesCollector), fees);
 
         return _amount - fees;
     }
@@ -184,25 +177,22 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
         uint256 _avgCost = _computeRealAvgCost(_asset, _totalBalance);
 
         // Compute profit or loss
-        int256 profitOrLoss = (int256(_lastPrice) - int256(_avgCost)) *
-            int256(_totalBalance) / 10**18;
+        int256 profitOrLoss = ((int256(_lastPrice) - int256(_avgCost)) *
+            int256(_totalBalance)) / 10 ** 18;
         
         if (profitOrLoss > 100) {
             // 100 is the minimum to be able to compute the fees
             uint256 dollarFees = (uint256(profitOrLoss) *
                 _performanceCommission) / 100;
-            
-            uint256 feesQty = dollarFees * 10**18/ _lastPrice;
-            
+
+            uint256 feesQty = (dollarFees * 10 ** 18) / _lastPrice;
+
             // Withdraw fees from AAVE
             _aaveLendingPool.withdraw(_asset, feesQty, address(this));
 
             // Transfer performance fees to the fees collector
-            IERC20(_asset).safeTransfer(
-                address(_feesCollector),
-                feesQty
-            );
-            
+            IERC20(_asset).safeTransfer(address(_feesCollector), feesQty);
+
             return _totalBalance - feesQty;
         }
         return _totalBalance;
@@ -213,11 +203,10 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
      * @param _asset asset to compute the avg cost
      * @param _depositAmount amount the user is depositing
      */
-    function _computeAssetAvgCost(address _asset, uint256 _depositAmount)
-        private
-        view
-        returns (uint256)
-    {
+    function _computeAssetAvgCost(
+        address _asset,
+        uint256 _depositAmount
+    ) private view returns (uint256) {
         uint256 totalQty = depositedBalance[_asset] + _depositAmount;
         require(totalQty > 0, "No quantity!");
         uint256 currentTotalValue = depositedBalance[_asset] *
@@ -236,17 +225,16 @@ contract HelloDefiAAVE2 is Ownable, Initializable {
      * @param _totalBalance total balance = deposited + rewards
      * @return the real avg cost
      */
-    function _computeRealAvgCost(address _asset, uint256 _totalBalance)
-        private
-        view
-        returns (uint256)
-    {
+    function _computeRealAvgCost(
+        address _asset,
+        uint256 _totalBalance
+    ) private view returns (uint256) {
         uint256 totalDepositedValue = depositedBalance[_asset] *
             assetAvgCost[_asset];
         if (IERC20Metadata(_asset).decimals() < 18) {
             // aToken have 18 decimals
-            uint256 decimalsToAdd = 10**IERC20Metadata(_asset).decimals() /
-                10**18;
+            uint256 decimalsToAdd = 10 ** IERC20Metadata(_asset).decimals() /
+                10 ** 18;
             totalDepositedValue = totalDepositedValue * decimalsToAdd;
         }
 
